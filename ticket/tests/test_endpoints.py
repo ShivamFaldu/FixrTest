@@ -1,5 +1,6 @@
 from operator import itemgetter
-
+import django
+django.setup()
 from django_dynamic_fixture import G
 from test import APITestCase, AnyOrder, Any
 from ticket.models import Order, Event, TicketType

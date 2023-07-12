@@ -29,6 +29,7 @@ class OrderSerializer(serializers.ModelSerializer):
             raise ValidationError("Ticket Types do not match")
         if validated_data["cancelled"]:
             instance.cancel_order
+        return instance
 
     class Meta:
         model = models.Order
