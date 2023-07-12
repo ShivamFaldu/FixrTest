@@ -78,8 +78,7 @@ class Order(models.Model):
             max_date = created_at
         if max_quantity>0:
             return {"date":str(max_date).split(" ")[0], "number_of_cancelled_ticket": max_quantity}
-        else:
-            return "There are no orders with cancellation"
+        return "There are no orders with cancellation"
 
     @transaction.atomic
     def cancel_order(self):
