@@ -78,6 +78,7 @@ class Order(models.Model):
 
     @transaction.atomic
     def cancel_order(self):
+        #followup logic to be added here to modify how many available tickets there will be after cancellation
         current_time=datetime.datetime.utcnow()
         if self.fulfilled:
             if (current_time - self.created_at.replace(tzinfo=None))< datetime.timedelta(minutes=30):
@@ -87,8 +88,6 @@ class Order(models.Model):
                 raise ValidationError("You cannot cancel an order after 30 minutes of initial purchase.")
         else:
             raise ValidationError("You cannot cancel an unfulfilled order. Please contact support.")
-
-
 
 
     def book_tickets(self):

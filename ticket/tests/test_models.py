@@ -68,8 +68,6 @@ class OrderTest(TestCase):
         expected = {"date": str(date).split(" ")[0], "number_of_cancelled_ticket": 11}
         self.assertEqual(expected, actual)
 
-
-
     def test_book_tickets(self):
         order = G(Order, ticket_type=F(quantity=5), quantity=3)
 
