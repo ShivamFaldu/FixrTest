@@ -1,35 +1,25 @@
-# FIXR Technical Test
+Solution:
 
-## Preamble
+Gaol 1:
+As i wasnt sure whether we wanted to have mutiple endpoint depicting different types of orders (ie: cancelled, active, all) i opted to keep eveything in one location for simplicity for now. 
+- I have added 2 new fields to the order table.
+- the view is now a modelviewset rather than read only which then allowed me to update the serialzer from a detailed view for cancelled orders.
+- Validation checks in the serializser have been put in to ensure that the order is only being cancelled and nothing else about the other is changing.
+- Validation checks in the model to check for if the order can be cancelled.
 
-You are in charge of the API of a company that sells tickets for many events which is used by the companies mobile and web application.
-The API, so far, is pretty simple, frontend applications can :
-- list / retrieve the detail of all the events
-- make a booking of x tickets of a given event's ticket type
-- list / retrieve the details of their own booking
+Goal 2:
+- a method get_number_of_orders_and_cancellation_rate() was added to the orders table to return the number of orders, cancellation rate and event as a dict
 
+Goal 3:
+- a Property method was added to the orders table
+- all order objects that were cancelled were first gathered
+- - it first determines the date of the first object in the queryset.
+  - it then runs through the query set and
+       -if date of the current order is the same as the date of the previous order then the current_quantity is incremented
+       -if the dates are different then it checks to see if this new current_quantity is more than max_quantity(which is the variable that will hold the most cancellations so far)
+          if this is true, max_quantity is reset to current_quantity, and a new max date is set which holds the date of the most cancellations
+    -at the end of the loop, there is a final check for the last value in the queryset to check if this has exceeded the current max_quantity. if so it adjusts accordingly.
 
-## Goal
-### Cancellation feature
+  -returns a dict with the date and the number of cancelled tickets
 
-In order to make your head of product (and your customers - of course) happy, you have to build a new feature:
-The users should now have the possibility to cancel any order within 30 minutes of purchase.
-
-### Some metrics
-
-Because of this new feature, the financial controller is on the edge of their chair, wanting to know the impact it will have on the company's profits.
-In order to have a feel for it, he asked you to create a reusable piece of code to pull out two pieces of information:
-   - The number of orders for a given event and its cancellation rate (as a percentage)
-   - The date with the highest number of cancelled tickets (not orders! i.e: 1 order of 15 tickets > 14 orders of 1 ticket)
-
-
-## Coding restrictions
-
-None, really ! You are allowed to use whatever you feel is best to achieve your goals.
-
-
-## Time limit
-
-No real time limit. It's entirely up to you.
-However, we highly suggest that you allocate yourself a set amount of time (ideally an hour) and do as much as you can during this time, then submit your results -
-even if you haven't finished, it's fine, we know time is precious.
+  
