@@ -71,9 +71,9 @@ class Order(models.Model):
                     max_date = created_at
                 current_quantity = order.quantity
                 date = created_at
-            if current_quantity>max_quantity:
-                max_quantity = current_quantity
-                max_date = created_at
+        if current_quantity>max_quantity:
+            max_quantity = current_quantity
+            max_date = created_at
         return {"date":str(max_date).split(" ")[0], "number_of_cancelled_ticket": max_quantity}
 
     @transaction.atomic
