@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django_dynamic_fixture import G, F
 import django
@@ -52,6 +53,11 @@ class OrderTest(TestCase):
         actual = order.get_number_of_orders_and_cancellation_rate("testEvents")
         expected = {"event":"testEvents", "number_of_orders":3,"cancellation_rate":"33.3%"}
         self.assertEqual(expected,actual)
+    def test_get_number_of_orders_and_cancellation_rate_validation_error(self):
+        order = G(Order, ticket_type=self.ticket_type, quantity=5,cancelled=False)
+        with self.assertRaises(ValidationError) as exc:
+            order.get_number_of_orders_and_cancellation_rate("testEvents")
+        self.assertEqual("Could not get orders or cancelled orders",exc.exception.args[0])
 
     def test_get_date_with_highest_cancellation(self):
         order = G(Order, ticket_type=self.ticket_type, quantity=5, cancelled=True)

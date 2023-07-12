@@ -46,7 +46,12 @@ class Order(models.Model):
     def get_number_of_orders_and_cancellation_rate(selfself,event):
         orders = Order.objects.filter(ticket_type__event__name=event).count()
         cancelled_order = Order.objects.filter(ticket_type__event__name=event, cancelled=True).count()
-        cancellation_percentage = (cancelled_order/orders)*100
+        if not orders or not cancelled_order :
+            raise ValidationError("Could not get orders or cancelled orders")
+        try:
+            cancellation_percentage = (cancelled_order/orders)*100
+        except Exception:
+            return
         return {"event":event,"number_of_orders":orders,"cancellation_rate":f"{round(cancellation_percentage,1)}"+"%"}
 
     @property
