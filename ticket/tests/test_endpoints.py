@@ -94,7 +94,6 @@ class EndpointsTest(APITestCase):
     #------They have been commented out as I wasnt able to test them and not sure if they work
     # def test_cancel_order(self):
     #     self.authorize()
-    #
     #     response = self.client.put(
     #         "/api/orders", data={"ticket_type": self.ticket_type2.pk, "quantity": 2,"cancelled":True}
     #     )
