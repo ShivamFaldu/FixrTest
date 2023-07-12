@@ -59,6 +59,7 @@ class Order(models.Model):
         orders = Order.objects.filter(cancelled=True).order_by("created_at")
         date = orders.first().created_at.strftime('%Y-%m-%d')
         max_date = ""
+        created_at=""
         max_quantity = 0
         current_quantity=0
         for order in orders:
