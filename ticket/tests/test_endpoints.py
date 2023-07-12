@@ -91,7 +91,7 @@ class EndpointsTest(APITestCase):
         self.assertEqual(successful_resp.data, {"id": Any(int), "ticket_type": self.ticket_type2.pk, "quantity": 2})
 
     #------NOTE!!!!! pseudo testcases had to be written as i couldnt run this file due to : django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.
-    #------They have been commented out as I wasnt able to test them and not sure if they work
+    #------They have been commented out as I wasnt able to test them and not sure if they work but i wanted to show where i was going with this.
     # def test_cancel_order(self):
     #     self.authorize()
     #     response = self.client.put(
