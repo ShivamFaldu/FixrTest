@@ -53,6 +53,7 @@ class Order(models.Model):
     def get_date_with_highest_cancellation(self):
         orders = Order.objects.filter(cancelled=True).order_by("created_at")
         date = orders.first().created_at.strftime('%Y-%m-%d')
+        max_date = ""
         max_quantity = 0
         current_quantity=0
         for order in orders:
@@ -62,11 +63,13 @@ class Order(models.Model):
             else:
                 if current_quantity>max_quantity:
                     max_quantity=current_quantity
+                    max_date = created_at
                 current_quantity = order.quantity
                 date = created_at
             if current_quantity>max_quantity:
                 max_quantity = current_quantity
-        return {"date":str(date).split(" ")[0], "number_of_cancelled_ticket": max_quantity}
+                max_date = created_at
+        return {"date":str(max_date).split(" ")[0], "number_of_cancelled_ticket": max_quantity}
 
     @transaction.atomic
     def cancel_order(self):
