@@ -43,7 +43,7 @@ class Order(models.Model):
     created_at = models.DateField(auto_now_add=True)
     cancelled = models.BooleanField(default=False)
 
-    def get_number_of_orders_and_cancellation_rate(selfself,event):
+    def get_number_of_orders_and_cancellation_rate(self,event):
         orders = Order.objects.filter(ticket_type__event__name=event).count()
         cancelled_order = Order.objects.filter(ticket_type__event__name=event, cancelled=True).count()
         if not orders or not cancelled_order :
