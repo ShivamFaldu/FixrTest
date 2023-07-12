@@ -32,4 +32,4 @@ class OrderSerializer(serializers.ModelSerializer):
             raise ValidationError("Sorry this order has already been cancelled")
     class Meta:
         model = models.Order
-        fields = ("id", "ticket_type", "quantity")
+        fields = ("id", "ticket_type", "quantity", "cancelled", "created_at")
