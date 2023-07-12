@@ -1,7 +1,6 @@
 from operator import itemgetter
 
 from django_dynamic_fixture import G
-
 from test import APITestCase, AnyOrder, Any
 from ticket.models import Order, Event, TicketType
 
@@ -90,6 +89,25 @@ class EndpointsTest(APITestCase):
         self.assertEqual(not_enought_ticket_resp.data, ["Couldn't book tickets"])
         self.assertEqual(successful_resp.status_code, 201)
         self.assertEqual(successful_resp.data, {"id": Any(int), "ticket_type": self.ticket_type2.pk, "quantity": 2})
+
+    #------NOTE!!!!! pseudo testcases had to be written as i couldnt run this file due to : django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.
+    #------They have been commented out as I wasnt able to test them and not sure if they work
+    # def test_cancel_order(self):
+    #     self.authorize()
+    #
+    #     response = self.client.put(
+    #         "/api/orders", data={"ticket_type": self.ticket_type2.pk, "quantity": 2,"cancelled":True}
+    #     )
+    #     self.assertEqual(response.status_code, 201)
+    #     #self.assertEqual( response.data, {"id": Any(int), "ticket_type": self.ticket_type2.pk, "quantity": 2,"cancelled":True})
+
+    # def test_cancel_order_not_fulfilled_validation_error(self):
+    #     self.authorize()
+    #     response = self.client.put(
+    #         "/api/orders", data={"ticket_type": self.ticket_type2.pk, "quantity": 2,"cancelled":True, ""fulfilled":False}
+    #     )
+    #     self.assertEqual(response.status_code, 400)
+    #     #self.assertEqual(response.data, "You cannot cancel an unfulfilled order. Please contact support.")
 
     def test_order_detail(self):
         user = self.authorize()
