@@ -68,6 +68,11 @@ class OrderTest(TestCase):
         expected = {"date": str(date).split(" ")[0], "number_of_cancelled_ticket": 11}
         self.assertEqual(expected, actual)
 
+    def test_get_date_with_highest_cancellation_no_cancellation(self):
+        order =G(Order, ticket_type=self.ticket_type, quantity=6, cancelled=False)
+        actual = order.get_date_with_highest_cancellation
+        self.assertEqual("There are no orders with cancellation", actual)
+
     def test_book_tickets(self):
         order = G(Order, ticket_type=F(quantity=5), quantity=3)
 
